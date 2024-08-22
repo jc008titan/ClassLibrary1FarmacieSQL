@@ -76,6 +76,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ErrorLogs.cs" />
+    <Compile Include="Farmacist.cs" />
     <Compile Include="Functii.cs" />
     <Compile Include="Medicamente.cs" />
     <Compile Include="MySettings.cs" />

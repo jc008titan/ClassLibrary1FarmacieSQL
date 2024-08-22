@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using WebAPI.Models;
 
 namespace FunctiiSQL
 {
@@ -604,5 +605,90 @@ namespace FunctiiSQL
                 //}
             }
         }
+        public DataTable SelectNumeFarmacisti()
+        {
+            using (var con = new SqlConnection(s.ConnectionString))
+            {
+                //var cmd = new SqlCommand("select * from Stock", conn);
+                //cmd.Parameters.AddWithValue("@bar", 17);
+                //cmd.ExecuteNonQuery();
+                DataTable dt = new DataTable();
+
+
+                using (var cmd = new SqlCommand(" SELECT [Nume]" + " FROM [farmacie].[dbo].[Farmacisti] ", con))
+                {
+                    try
+                    {
+                        con.Open();
+
+                        dt.Load(cmd.ExecuteReader());
+                        return dt;
+                    }
+                    catch (Exception ex)
+                    {
+                        //(snip) Log Exceptions
+                        err.WriteLogException(ex);
+                        throw ex;
+                    }
+
+                }
+            }
+        }
+        public DataTable SelectFarmacisti()
+        {
+            using (var con = new SqlConnection(s.ConnectionString))
+            {
+                //var cmd = new SqlCommand("select * from Stock", conn);
+                //cmd.Parameters.AddWithValue("@bar", 17);
+                //cmd.ExecuteNonQuery();
+                DataTable dt = new DataTable();
+
+
+                using (var cmd = new SqlCommand(" SELECT *" + " FROM [farmacie].[dbo].[Farmacisti] ", con))
+                {
+                    try
+                    {
+                        con.Open();
+
+                        dt.Load(cmd.ExecuteReader());
+                        return dt;
+                    }
+                    catch (Exception ex)
+                    {
+                        //(snip) Log Exceptions
+                        err.WriteLogException(ex);
+                        throw ex;
+                    }
+
+                }
+            }
+        }
+
+        public bool AdaugaFarmacist(Farmacist farmacist)
+        {
+            using (var con = new SqlConnection(s.ConnectionString))
+            {
+                {
+                    try
+                    {
+                        con.Open();
+                        string comandaadaugare = "";
+                            comandaadaugare = "INSERT INTO [dbo].[Farmacisti]([Nume],[Varsta],[Email],[Telefon],[Localitate],[Judet]) VALUES ('" + farmacist.Nume + "','" + farmacist.Varsta + "','" + farmacist.Email + "','" + farmacist.Telefon + "','" + farmacist.Localitate + "','" + farmacist.Judet+ "')";
+                            using (var cmd = new SqlCommand(comandaadaugare, con))
+                                cmd.ExecuteReader();
+                        
+                        return true;
+                    }
+                    catch (Exception ex)
+                    {
+                        err.WriteLogException(ex);
+                        return false;
+                        throw ex;
+                        //(snip) Log Exceptions
+                    }
+                }
+            }
+        }
+
     }
 }
